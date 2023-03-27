@@ -5,6 +5,7 @@ import 'package:learn_flutter/practices/002counter_provider.dart';
 import 'package:learn_flutter/practices/003text_sample.dart';
 
 import '001counter.dart';
+import '004button_sample.dart';
 
 class RouterItem {
   late String path;
@@ -15,7 +16,8 @@ class RouterItem {
 final List<RouterItem> practiceList = [
   RouterItem('001counter', const Counter()),
   RouterItem('002counter_provider', const CounterP()),
-  RouterItem('003text_sample', TextSample())
+  RouterItem('003text_sample', const TextSample()),
+  RouterItem('004button_sample', const ButtonSample())
 ];
 
 class PracticeIndex extends StatelessWidget {

@@ -37,7 +37,16 @@ dependencies:
   cupertino_icons: ^1.0.2
   provider: ^6.0.5   # 全局状态管理
   go_router: ^6.5.0  # 声明式路由
-  logger: ^1.3.0
+  logger: ^1.3.0    #日志
+  google_fonts: ^4.0.3 # 安装google的字体
+  fluttertoast: ^8.2.1
+  url_launcher: ^6.1.10 # 跨平台打开url
+  path_provider: ^2.0.14 # 跨平台处理文件路径
+  geolocator: ^9.0.2 #跨平台定位信息
+  font_awesome_flutter: ^10.4.0 #图标
+  sqflite: ^2.2.6 #sqlite 插件
+  animated_text_kit: ^4.2.2 #文字动效库
+
 
 dev_dependencies:
   flutter_test:

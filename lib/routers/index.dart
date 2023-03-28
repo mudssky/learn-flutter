@@ -34,7 +34,7 @@ final GoRouter globalRouter = GoRouter(
 List<RouteBase> generateRoutes(List<RouterItem> list) {
   return list
       .map((e) => GoRoute(
-          path: "${e.path}",
+          path: e.path,
           builder: (BuildContext context, GoRouterState state) =>
               e.constructor))
       .toList();

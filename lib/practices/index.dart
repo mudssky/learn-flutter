@@ -6,6 +6,10 @@ import 'package:learn_flutter/practices/003text_sample.dart';
 
 import '001counter.dart';
 import '004button_sample.dart';
+import '005image_sample.dart';
+import '006image_sample2.dart';
+import '007icon_sample.dart';
+import '008switch_checkbox.dart';
 
 class RouterItem {
   late String path;
@@ -17,7 +21,11 @@ final List<RouterItem> practiceList = [
   RouterItem('001counter', const Counter()),
   RouterItem('002counter_provider', const CounterP()),
   RouterItem('003text_sample', const TextSample()),
-  RouterItem('004button_sample', const ButtonSample())
+  RouterItem('004button_sample', const ButtonSample()),
+  RouterItem('005image_sample', const ImageSample()),
+  RouterItem('006image_sample2', const ImageSample2()),
+  RouterItem('007icon_sample', const IconSample()),
+  RouterItem('008switch_checkbox', const SwitchCheckbox()),
 ];
 
 class PracticeIndex extends StatelessWidget {

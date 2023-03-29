@@ -4,20 +4,18 @@ import 'package:flutter/material.dart';
 
 import '../logger/index.dart';
 
-class TextFieldSample extends StatefulWidget {
+class FormSample extends StatefulWidget {
+  const FormSample({super.key});
+
   @override
-  _TextFieldSampleState createState() => _TextFieldSampleState();
+  FormSampleState createState() => FormSampleState();
 }
 
-class _TextFieldSampleState extends State<TextFieldSample> {
-  final String title = "009text_field";
-
-  TextEditingController _usernameController = TextEditingController();
-  TextEditingController _passwdController = TextEditingController();
-
-  FocusNode focusNode1 = FocusNode();
-  FocusNode focusNode2 = FocusNode();
-  FocusScopeNode? focusScopeNode;
+class FormSampleState extends State<FormSample> {
+  final String title = "010form_sample";
+  final TextEditingController _unameController = TextEditingController();
+  final TextEditingController _pwdController = TextEditingController();
+  final GlobalKey _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -30,86 +28,79 @@ class _TextFieldSampleState extends State<TextFieldSample> {
           padding: const EdgeInsets.all(16.0),
           child: ListView(
             children: [
-              Column(
-                children: <Widget>[
-                  TextField(
-                    autofocus: true,
-                    controller: _usernameController,
-                    decoration: InputDecoration(
-                        labelText: "用户名",
-                        hintText: "用户名或邮箱",
-                        prefixIcon: Icon(Icons.person)),
-                  ),
-                  TextField(
-                    decoration: InputDecoration(
-                        labelText: "密码",
-                        hintText: "您的登录密码",
-                        prefixIcon: Icon(Icons.lock)),
-                    controller: _passwdController,
-                    obscureText: true,
-                  ),
-                ],
-              ),
-              Padding(
-                padding: EdgeInsets.all(16.0),
+              Form(
+                key: _formKey, //设置globalKey，用于后面获取FormState
+                // 用户交互后触发自动校验
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 child: Column(
                   children: <Widget>[
-                    TextField(
+                    TextFormField(
                       autofocus: true,
-                      focusNode: focusNode1, //关联focusNode1
-                      decoration: InputDecoration(labelText: "input1"),
-                    ),
-                    TextField(
-                      focusNode: focusNode2, //关联focusNode2
-                      decoration: InputDecoration(labelText: "input2"),
-                    ),
-                    Builder(
-                      builder: (ctx) {
-                        return Column(
-                          children: <Widget>[
-                            ElevatedButton(
-                              child: Text("移动焦点"),
-                              onPressed: () {
-                                //将焦点从第一个TextField移到第二个TextField
-                                // 这是一种写法 FocusScope.of(context).requestFocus(focusNode2);
-                                // 这是第二种写法
-                                if (null == focusScopeNode) {
-                                  focusScopeNode = FocusScope.of(context);
-                                }
-                                focusScopeNode?.requestFocus(focusNode2);
-                              },
-                            ),
-                            ElevatedButton(
-                              child: Text("隐藏键盘"),
-                              onPressed: () {
-                                // 当所有编辑框都失去焦点时键盘就会收起
-                                focusNode1.unfocus();
-                                focusNode2.unfocus();
-                              },
-                            ),
-                          ],
-                        );
+                      controller: _unameController,
+                      decoration: const InputDecoration(
+                        labelText: "用户名",
+                        hintText: "用户名或邮箱",
+                        icon: Icon(Icons.person),
+                      ),
+                      // 校验用户名
+                      validator: (v) {
+                        return v!.trim().isNotEmpty ? null : "用户名不能为空";
+                      },
+                      onSaved: (v) {
+                        gl.d("save username ${v!}");
                       },
                     ),
+                    TextFormField(
+                      controller: _pwdController,
+                      decoration: const InputDecoration(
+                        labelText: "密码",
+                        hintText: "您的登录密码",
+                        icon: Icon(Icons.lock),
+                      ),
+                      obscureText: true,
+                      //校验密码
+                      validator: (v) {
+                        return v!.trim().length > 5 ? null : "密码不能少于6位";
+                      },
+                      onSaved: (v) {
+                        // 保存的逻辑，后面可以调用formState。save全部执行
+                        gl.d('save pwd${v!}');
+                      },
+                    ),
+                    // 登录按钮
+                    Padding(
+                      padding: const EdgeInsets.only(top: 28.0),
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: ElevatedButton(
+                              child: const Padding(
+                                padding: EdgeInsets.all(16.0),
+                                child: Text("登录"),
+                              ),
+                              onPressed: () {
+                                // 通过_formKey.currentState 获取FormState后，
+                                // 调用validate()方法校验用户名密码是否合法，校验
+                                // 通过后再提交数据。
+                                gl.d("pressed");
+                                if ((_formKey.currentState as FormState)
+                                    .validate()) {
+                                  //验证通过提交数据
+                                  // gl.d(_formKey.currentState.toString());
+                                  // print(_formKey.currentState.toString());
+                                  (_formKey.currentState as FormState).save();
+                                }
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
                   ],
                 ),
               )
             ],
           ),
         ));
-  }
-
-  @override
-  void initState() {
-    // 可以通过controller监听文本域
-    _usernameController.addListener(() {
-      print(_usernameController.text);
-    });
-  }
-
-  @override
-  void didUpdateWidget(TextFieldSample oldWidget) {
-    gl.d(_usernameController.text);
-    gl.d(_passwdController.text);
   }
 }

@@ -46,6 +46,7 @@ dependencies:
   font_awesome_flutter: ^10.4.0 #图标
   sqflite: ^2.2.6 #sqlite 插件
   animated_text_kit: ^4.2.2 #文字动效库
+  flutter_local_notifications: ^8.2.0
 
 
 dev_dependencies:

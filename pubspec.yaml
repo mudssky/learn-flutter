@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.19.5 <3.0.0'
+  sdk: '>=3.0.0 <3.10.6'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -36,9 +36,9 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   provider: ^6.0.5   # 全局状态管理
-  go_router: ^6.5.0  # 声明式路由
+  go_router: ^8.1.0  # 声明式路由
   logger: ^1.3.0    #日志
-  google_fonts: ^4.0.3 # 安装google的字体
+  google_fonts: ^5.1.0 # 安装google的字体
   fluttertoast: ^8.2.1
   url_launcher: ^6.1.10 # 跨平台打开url
   path_provider: ^2.0.14 # 跨平台处理文件路径
@@ -46,7 +46,8 @@ dependencies:
   font_awesome_flutter: ^10.4.0 #图标
   sqflite: ^2.2.6 #sqlite 插件
   animated_text_kit: ^4.2.2 #文字动效库
-  flutter_local_notifications: ^8.2.0
+  # 跨平台通知库
+  flutter_local_notifications: ^14.1.1
 
 
 dev_dependencies:
